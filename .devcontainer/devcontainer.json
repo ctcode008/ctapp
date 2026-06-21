@@ -1,0 +1,50 @@
+{
+  "name": "Python 3",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  //"image": "mcr.microsoft.com/devcontainers/python:1-3.11-bullseye",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:3.1.0": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:3": {
+      "moby": true,
+      "azureDnsAutoDetection": true,
+      "installDockerBuildx": true,
+      "version": "latest",
+      "dockerDashComposeVersion": "none"
+    },
+    "ghcr.io/devcontainers/features/sshd:1": {
+        "version": "latest"
+    }
+
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md",
+        "cmdapi.py"
+      ]
+    },
+    "vscode": {
+      "settings": {},
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ]
+    }
+  },
+  "updateContentCommand": "[ -f packages.txt ] && sudo apt update && sudo apt upgrade -y && sudo xargs apt install -y <packages.txt; [ -f requirements.txt ] && pip3 install --user -r requirements.txt; pip3 install --user streamlit; echo '✅ Packages installed and Requirements met'",
+  "postAttachCommand": {
+    //"server": "streamlit run cmdapi.py --server.enableCORS false --server.enableXsrfProtection false"
+    "server": "docker run -itd -e CF_TOKEN=eyJhIjoiYTkwODlmNDM5MTNmMmMyZjE5MTlmODIxYzQxYmNkY2QiLCJ0IjoiMGUxMzJhMGYtYTczMi00YjhjLWE5M2YtOTBkZjNjMWU4Yzk5IiwicyI6Ik5URTBaamRtWVdJdFpUYzJaaTAwTjJFNExUZzRPV010WVRVME0yWTFNREV4WldReiJ9 alixan/alpinesh:v7"
+  },
+  "portsAttributes": {
+    "8501": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "forwardPorts": [
+    8501
+  ]
+}
